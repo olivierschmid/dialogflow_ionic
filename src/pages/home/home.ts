@@ -1,4 +1,5 @@
 import {Component, NgZone} from '@angular/core';
+import {SpeechRecognition} from "@ionic-native/speech-recognition";
 import {NavController} from 'ionic-angular';
 
 declare var ApiAIPromises: any;
@@ -11,7 +12,7 @@ declare var ApiAIPlugin: any;
 export class HomePage {
   answers = [];
 
-  constructor(public navCtrl: NavController, public ngZone: NgZone) {
+  constructor(public navCtrl: NavController, public ngZone: NgZone, private speechRecognition: SpeechRecognition) {
 
   }
 
@@ -22,16 +23,11 @@ export class HomePage {
     }).then(result => console.log(result));
 
 
-
-
-    ApiAIPromises.setListeningStartCallback(function () {
-      console.log("listening started");
-    });
-
-    ApiAIPromises.setListeningFinishCallback(function () {
-      console.log("listening stopped");
-    });
-
+    this.speechRecognition.requestPermission()
+      .then(
+        () => console.log('Granted'),
+        () => console.log('Denied')
+      )
   }
 
 
@@ -47,35 +43,17 @@ export class HomePage {
   }
 
   sendVoice() {
-    try {
-      ApiAIPlugin.levelMeterCallback(function(level) {
-        console.log(level);
-      });
-
-      ApiAIPlugin.requestVoice(
-        {}, // empty for simple requests, some optional parameters can be here
-         (response) => {
-          // place your result processing here
-           console.log(JSON.stringify(response));
-          alert(JSON.stringify(response));
+    this.speechRecognition.startListening()
+      .subscribe(
+        (matches: Array<string>) => {
+          console.log(matches);
+          alert(matches);
         },
-         (error) => {
-          // place your error processing here
-          alert(error);
-        });
-    } catch (e) {
-      alert(e);
-    }
+        (onerror) => console.log('error:', onerror)
+      )
   }
 
   stopListening() {
-    try {
-      ApiAIPlugin.stopListening();
-
-    } catch (e) {
-      alert(e);
-    }
+    this.speechRecognition.stopListening()
   }
-
-
 }
