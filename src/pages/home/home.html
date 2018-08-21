@@ -24,12 +24,8 @@
   </div>
 
 
-  <button ion-button class="voice-buttons" icon-only clear (click)="sendVoice()">
-    <ion-icon name="mic"></ion-icon>
-  </button>
-  <button ion-button class="voice-buttons" icon-only clear (click)="stopListening()">
-    <ion-icon name="mic-off"></ion-icon>
-  </button>
-
+  <ion-fab bottom right>
+    <button ion-fab (press)="sendVoice()" (touchend)="stopListening()"><ion-icon name="mic"></ion-icon></button>
+  </ion-fab>
 
 </ion-content>

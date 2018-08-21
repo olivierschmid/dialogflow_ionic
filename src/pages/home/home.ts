@@ -45,10 +45,11 @@ export class HomePage {
   }
 
   sendVoice() {
+    console.log('start listening...');
 
     let options = {
       language: 'de-DE',
-      matches:1
+      matches: 1
     }
 
     this.speechRecognition.startListening(options)
@@ -63,6 +64,8 @@ export class HomePage {
   }
 
   stopListening() {
+    console.log('stop listening...');
+
     this.speechRecognition.stopListening()
   }
 }
