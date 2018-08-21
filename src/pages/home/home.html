@@ -5,14 +5,14 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Dialogflow Integration</h2>
+  <h2>Meine Mobiliar Assistent</h2>
 
   <ion-item>
-    <ion-input type="text" clearInput placeholder="Ask" [(ngModel)]="question"></ion-input>
+    <ion-input type="text" clearInput placeholder="Stelle eine Frage" [(ngModel)]="question"></ion-input>
   </ion-item>
 
-  <button ion-button (click)="ask(question)">
-    Ask
+  <button ion-button icon-only clear (click)="ask(question)">
+    <ion-icon name="text"></ion-icon>
   </button>
 
 
