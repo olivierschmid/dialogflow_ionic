@@ -7,13 +7,11 @@
 <ion-content padding>
   <h2>Meine Mobiliar Assistent</h2>
 
-  <ion-item>
-    <ion-input type="text" clearInput placeholder="Stelle eine Frage" [(ngModel)]="question"></ion-input>
-  </ion-item>
 
-  <button ion-button icon-only clear (click)="ask(question)">
-    <ion-icon name="text"></ion-icon>
-  </button>
+  <ion-item>
+    <ion-input type="text" placeholder="Stelle eine Frage" [(ngModel)]="question"></ion-input>
+    <button clear item-right (click)="ask(question)"><ion-icon name="text"></ion-icon></button>
+  </ion-item>
 
 
   <div *ngFor="let answer of answers">
