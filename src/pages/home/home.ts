@@ -1,6 +1,7 @@
 import {Component, NgZone} from '@angular/core';
 import {SpeechRecognition} from "@ionic-native/speech-recognition";
 import {NavController} from 'ionic-angular';
+import {Answer} from "./dataTypes/answerType";
 
 declare var ApiAIPromises: any;
 
@@ -9,7 +10,7 @@ declare var ApiAIPromises: any;
   templateUrl: 'home.html'
 })
 export class HomePage {
-  answers = [];
+  answers: Array<Answer> = [];
   question = '';
 
   constructor(public navCtrl: NavController, public ngZone: NgZone, private speechRecognition: SpeechRecognition) {
@@ -32,12 +33,13 @@ export class HomePage {
 
 
   ask(question) {
+    this.answers.push({message: question, bot: false});
     ApiAIPromises.requestText({
       query: question
     })
       .then(({result: {fulfillment: {speech}}}) => {
         this.ngZone.run(() => {
-          this.answers.push(speech);
+          this.answers.push({message: speech, bot: true});
         });
       })
   }

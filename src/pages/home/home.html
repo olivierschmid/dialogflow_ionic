@@ -15,8 +15,11 @@
 
 
   <div *ngFor="let answer of answers">
-    <div class="message">
-      {{answer}}
+    <div *ngIf="answer.bot == true" class="message_bot">
+      {{answer.message}}
+    </div>
+    <div *ngIf="answer.bot == false" class="message_human">
+      {{answer.message}}
     </div>
   </div>
 
