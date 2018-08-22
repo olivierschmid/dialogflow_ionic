@@ -41,7 +41,7 @@ export class HomePage {
       .then(({result: {fulfillment: {speech}}}) => {
         this.ngZone.run(() => {
           this.answers.push({message: speech, bot: true});
-          this.tts.speak({text: speech, locale:'de-DE'})
+          this.tts.speak({text: speech, locale:'de-DE', rate: 1.0})
             .then(() => console.log('Text to speech Success'))
             .catch((reason: any) => console.log(reason));
         });
