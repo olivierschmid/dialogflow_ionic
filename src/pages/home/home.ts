@@ -2,6 +2,7 @@ import {Component, NgZone} from '@angular/core';
 import {SpeechRecognition} from "@ionic-native/speech-recognition";
 import {NavController} from 'ionic-angular';
 import {Answer} from "./dataTypes/answerType";
+import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 declare var ApiAIPromises: any;
 
@@ -13,7 +14,7 @@ export class HomePage {
   answers: Array<Answer> = [];
   question = '';
 
-  constructor(public navCtrl: NavController, public ngZone: NgZone, private speechRecognition: SpeechRecognition) {
+  constructor(public navCtrl: NavController, public ngZone: NgZone, private speechRecognition: SpeechRecognition, private tts: TextToSpeech) {
 
   }
 
@@ -40,6 +41,9 @@ export class HomePage {
       .then(({result: {fulfillment: {speech}}}) => {
         this.ngZone.run(() => {
           this.answers.push({message: speech, bot: true});
+          this.tts.speak({text: speech, locale:'de-DE'})
+            .then(() => console.log('Text to speech Success'))
+            .catch((reason: any) => console.log(reason));
         });
       })
   }
